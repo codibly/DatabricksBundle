@@ -54,11 +54,12 @@ CodiblyDatabricksBundle that you want to use it.
 
 ```yaml
 # app/config/config.yml
-databricks:
-    driver: guzzle
-    host: 'https://your_instance.clud.databricks.com/api/v2.0'
-    username: '%env(DATABRICKS_USERNAME)%'
-    password: '%env(DATABRICKS_PASSWORD)%'
+codibly_databricks:
+    api:
+        driver: guzzle
+        host: 'https://your_instance.clud.databricks.com/api/v2.0'
+        username: '%env(DATABRICKS_USERNAME)%'
+        password: '%env(DATABRICKS_PASSWORD)%'
 ```
 
 ## That was it!
