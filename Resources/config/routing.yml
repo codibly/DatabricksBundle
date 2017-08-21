@@ -1,0 +1,3 @@
+codibly_databricks_homepage:
+    path:     /
+    defaults: { _controller: CodiblyDatabricksBundle:Default:index }

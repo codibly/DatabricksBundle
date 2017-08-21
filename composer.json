@@ -1,0 +1,38 @@
+{
+    "name": "codibly/databricks-bundle",
+    "type": "symfony-bundle",
+    "description": "Databricks PHP integration for your Symfony3 project using Guzzle",
+    "keywords": ["symfony", "databricks", "apache", "spark", "amazon", "web", "services", "aws"],
+    "homepage": "https://github.com/codibly/CodiblyDatabricksBundle",
+    "license": "MIT",
+    "authors": [
+        { "name": "Codibly Company", "homepage": "https://codibly.com" },
+        { "name": "Mariusz Kraj", "email": "mariusz.kraj@codibly.com" },
+        { "name": "Marek Miernik", "email": "marek.miernik@codibly.com" }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "symfony/framework-bundle": "^3.1",
+        "symfony/console": "^3.1",
+        "symfony/options-resolver": "^3.1",
+        "symfony/validator": "^3.1",
+        "psr/log": "^1.0",
+        "guzzle/guzzle": "^3.9"
+    },
+    "require-dev": {
+        "codeception/codeception": "2.3.*"
+    },
+    "autoload": {
+        "psr-4": { "Codibly\\DatabricksBundle\\": "" }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

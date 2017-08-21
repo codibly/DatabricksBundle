@@ -1,0 +1,8 @@
+services:
+    databricks-client:
+        class: 'Codibly\DatabricksBundle\Client\Client'
+        arguments: ['@databricks-adapter']
+
+    databricks-adapter-guzzle:
+        class: 'Codibly\DatabricksBundle\Adapter\GuzzleAdapter'
+        arguments: ['%databricks.username%', '%databricks.password', '%databricks.host%']
