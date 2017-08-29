@@ -17,7 +17,7 @@ class ClusterModule extends GenericModule implements ClusterModuleInterface
 
     public function start(string $clusterId)
     {
-        return $this->adapter->makeRequest(
+        return $this->client->getAdapter()->makeRequest(
             Request::METHOD_POST,
             ClusterModuleInterface::ENDPOINT_START,
             [
@@ -28,7 +28,7 @@ class ClusterModule extends GenericModule implements ClusterModuleInterface
 
     public function restart(string $clusterId)
     {
-        return $this->adapter->makeRequest(
+        return $this->client->getAdapter()->makeRequest(
             Request::METHOD_POST,
             ClusterModuleInterface::ENDPOINT_RESTART,
             [
@@ -39,7 +39,7 @@ class ClusterModule extends GenericModule implements ClusterModuleInterface
 
     public function resize(string $clusterId, int $workersNumber)
     {
-        return $this->adapter->makeRequest(
+        return $this->client->getAdapter()->makeRequest(
             Request::METHOD_POST,
             ClusterModuleInterface::ENDPOINT_RESIZE,
             [
@@ -51,7 +51,7 @@ class ClusterModule extends GenericModule implements ClusterModuleInterface
 
     public function delete(string $clusterId)
     {
-        return $this->adapter->makeRequest(
+        return $this->client->getAdapter()->makeRequest(
             Request::METHOD_POST,
             ClusterModuleInterface::ENDPOINT_DELETE,
             [
@@ -62,7 +62,7 @@ class ClusterModule extends GenericModule implements ClusterModuleInterface
 
     public function get(string $clusterId)
     {
-        return $this->adapter->makeRequest(
+        return $this->client->getAdapter()->makeRequest(
             Request::METHOD_GET,
             ClusterModuleInterface::ENDPOINT_GET,
             [
@@ -73,7 +73,7 @@ class ClusterModule extends GenericModule implements ClusterModuleInterface
 
     public function list()
     {
-        return $this->adapter->makeRequest(
+        return $this->client->getAdapter()->makeRequest(
             Request::METHOD_GET,
             ClusterModuleInterface::ENDPOINT_LIST
         );
@@ -81,7 +81,7 @@ class ClusterModule extends GenericModule implements ClusterModuleInterface
 
     public function listZones()
     {
-        return $this->adapter->makeRequest(
+        return $this->client->getAdapter()->makeRequest(
             Request::METHOD_GET,
             ClusterModuleInterface::ENDPOINT_LIST_ZONES
         );
@@ -89,7 +89,7 @@ class ClusterModule extends GenericModule implements ClusterModuleInterface
 
     public function listNodeTypes()
     {
-        return $this->adapter->makeRequest(
+        return $this->client->getAdapter()->makeRequest(
             Request::METHOD_GET,
             ClusterModuleInterface::ENDPOINT_LIST_NODE_TYPES
         );
@@ -97,7 +97,7 @@ class ClusterModule extends GenericModule implements ClusterModuleInterface
 
     public function sparkVersions()
     {
-        return $this->adapter->makeRequest(
+        return $this->client->getAdapter()->makeRequest(
             Request::METHOD_GET,
             ClusterModuleInterface::ENDPOINT_SPARK_VERSIONS
         );
