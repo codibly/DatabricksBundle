@@ -5,4 +5,4 @@ services:
 
     databricks-adapter-guzzle:
         class: 'Codibly\DatabricksBundle\Adapter\GuzzleAdapter'
-        arguments: ['%databricks.username%', '%databricks.password', '%databricks.host%']
+        arguments: ['%databricks.username%', '%databricks.password%', '%databricks.host%']
