@@ -6,16 +6,16 @@ use Codibly\DatabricksBundle\DTO\Cluster;
 
 interface ClusterModuleInterface extends ModuleInterface
 {
-    const ENDPOINT_CREATE = '/clusters/create';
-    const ENDPOINT_START = '/clusters/start';
-    const ENDPOINT_RESTART = '/clusters/restart';
-    const ENDPOINT_RESIZE = '/clusters/resize';
-    const ENDPOINT_DELETE = '/clusters/delete';
-    const ENDPOINT_GET = '/clusters/get';
-    const ENDPOINT_LIST = '/clusters/list';
-    const ENDPOINT_LIST_ZONES = '/clusters/list-zones';
-    const ENDPOINT_LIST_NODE_TYPES = '/clusters/list-node-types';
-    const ENDPOINT_SPARK_VERSIONS = '/clusters/spark-versions';
+    const ENDPOINT_CREATE = 'clusters/create';
+    const ENDPOINT_START = 'clusters/start';
+    const ENDPOINT_RESTART = 'clusters/restart';
+    const ENDPOINT_RESIZE = 'clusters/resize';
+    const ENDPOINT_DELETE = 'clusters/delete';
+    const ENDPOINT_GET = 'clusters/get';
+    const ENDPOINT_LIST = 'clusters/list';
+    const ENDPOINT_LIST_ZONES = 'clusters/list-zones';
+    const ENDPOINT_LIST_NODE_TYPES = 'clusters/list-node-types';
+    const ENDPOINT_SPARK_VERSIONS = 'clusters/spark-versions';
 
     public function create(Cluster $cluster);
 

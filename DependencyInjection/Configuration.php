@@ -37,6 +37,15 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->scalarNode('host')
                             ->isRequired()
+                            ->beforeNormalization()
+                                ->ifString()
+                                ->then(function ($v) {
+                                    if('/' !== substr($v, -1, 1)) {
+                                        return $v.'/';
+                                    }
+                                    return $v;
+                                })
+                            ->end()
                             ->cannotBeEmpty()
                         ->end()
                         ->scalarNode('username')
