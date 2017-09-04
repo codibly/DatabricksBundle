@@ -2,11 +2,18 @@
 
 namespace Codibly\DatabricksBundle\Adapter;
 
+use Codibly\DatabricksBundle\Client\Exception\BadResponseException;
+use Codibly\DatabricksBundle\Client\Traits\Loggable;
+use Guzzle\Http\Exception\ClientErrorResponseException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GuzzleAdapter implements AdapterInterface
 {
+    use Loggable;
+
     /**
      * @var string
      */
@@ -35,6 +42,11 @@ class GuzzleAdapter implements AdapterInterface
     private $client;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * GuzzleAdapter constructor.
      * @param string $username
      * @param string $password
@@ -47,6 +59,11 @@ class GuzzleAdapter implements AdapterInterface
         $this->host = $host;
 
         $this->initializeClient();
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 
     private function initializeClient()
@@ -74,10 +91,45 @@ class GuzzleAdapter implements AdapterInterface
      * @param string $method
      * @param string $endpoint
      * @param array $params
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @return array
+     * @throws BadResponseException
      */
-    public function makeRequest(string $method, string $endpoint, array $params = [])
+    public function makeRequest(string $method, string $endpoint, array $params = []): array
     {
-        return $this->client->request($method, $endpoint, $params);
+        try {
+            $this->info(
+                sprintf(
+                    'Sending request %s to endpoint %s with params %s',
+                    $method,
+                    $endpoint,
+                    json_encode($params)
+                )
+            );
+
+            $response = $this->client->request($method, $endpoint, $params);
+            $content = json_decode($response->getBody()->getContents(), true);
+
+            $this->info(
+                sprintf(
+                    'Received response from %s endpoint with status code %s and content: %s',
+                    $endpoint,
+                    $response->getStatusCode(),
+                    json_encode($content)
+                )
+            );
+
+            return $content;
+        } catch (ClientErrorResponseException $e) {
+            $this->error(
+                sprintf(
+                    'There was error during request to %s endpoint with status code %s and content: %s',
+                    $endpoint,
+                    $e->getResponse()->getStatusCode(),
+                    json_encode((string) $e->getResponse()->getBody())
+                )
+            );
+
+            throw new BadResponseException($e->getResponse(), $e);
+        }
     }
 }

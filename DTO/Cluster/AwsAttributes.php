@@ -44,9 +44,20 @@ class AwsAttributes extends GenericDTO
      */
     protected $ebsVolumeSize;
 
+    /**
+     * @param array $rawAPIResponse
+     * @return AwsAttributes
+     */
     public static function hydrate(array $rawAPIResponse): DTOInterface
     {
         $awsAttributes = new AwsAttributes();
+
+        $awsAttributes
+            ->setZoneId($rawAPIResponse['zone_id'])
+            ->setFirstOnDemand($rawAPIResponse['first_on_demand'])
+            ->setAvailability(new AwsAvailability($rawAPIResponse['availability']))
+            ->setSpotBidPricePercent($rawAPIResponse['spot_bid_price_percent'])
+            ->setEbsVolumeCount($rawAPIResponse['ebs_volume_count']);
 
         return $awsAttributes;
     }
