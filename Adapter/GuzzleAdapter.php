@@ -106,6 +106,10 @@ class GuzzleAdapter implements AdapterInterface
                 )
             );
 
+            if(!empty($params)) {
+                $params = ['json' => $params];
+            }
+
             $response = $this->client->request($method, $endpoint, $params);
             $content = json_decode($response->getBody()->getContents(), true);
 
