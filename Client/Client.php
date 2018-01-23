@@ -11,22 +11,33 @@ use Codibly\DatabricksBundle\Client\Module\InstanceProfileModuleInterface;
 use Codibly\DatabricksBundle\Client\Module\JobModuleInterface;
 use Codibly\DatabricksBundle\Client\Module\LibraryModuleInterface;
 use Codibly\DatabricksBundle\Client\Module\WorkspaceModuleInterface;
+use Codibly\DatabricksBundle\Client\Traits\Loggable;
 use Codibly\DatabricksBundle\DTO\DTOInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\RecursiveValidator;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\ValidatorBuilderInterface;
 
 class Client implements ClientInterface
 {
+    use Loggable;
+
     /**
      * @var AdapterInterface
      */
-    private $adapter;
+    protected $adapter;
 
     /**
      * @var ValidatorInterface
      */
-    private $validator;
+    protected $validator;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
 
     public function __construct(AdapterInterface $adapter)
     {
@@ -46,6 +57,11 @@ class Client implements ClientInterface
         $this->validator = $validator;
     }
 
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @return ValidatorInterface
      */
@@ -54,13 +70,24 @@ class Client implements ClientInterface
         return $this->validator;
     }
 
-    public function validate(DTOInterface $dto)
+    public function validate(DTOInterface $dto): ConstraintViolationListInterface
     {
         if(!is_null($this->validator)) {
-            return $this->validator->validate($dto);
+            $result = $this->validator->validate($dto);
+            $this->info(
+                sprintf(
+                    'Validation of the %s class with errors: %s',
+                    get_class($dto),
+                    json_encode($result)
+                )
+            );
+
+            return $result;
+        } else {
+            $this->info('No validator provided. Skipping.');
         }
 
-        return [];
+        return new ConstraintViolationList();
     }
 
     public function cluster(): ClusterModuleInterface

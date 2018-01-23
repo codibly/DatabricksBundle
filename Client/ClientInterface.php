@@ -10,6 +10,10 @@ use Codibly\DatabricksBundle\Client\Module\InstanceProfileModuleInterface;
 use Codibly\DatabricksBundle\Client\Module\JobModuleInterface;
 use Codibly\DatabricksBundle\Client\Module\LibraryModuleInterface;
 use Codibly\DatabricksBundle\Client\Module\WorkspaceModuleInterface;
+use Codibly\DatabricksBundle\DTO\DTOInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 interface ClientInterface
 {
@@ -19,6 +23,12 @@ interface ClientInterface
      * @return AdapterInterface
      */
     public function getAdapter(): AdapterInterface;
+
+    public function setValidator(ValidatorInterface $validator);
+
+    public function getLogger(): LoggerInterface;
+
+    public function validate(DTOInterface $dto): ConstraintViolationListInterface;
 
     public function cluster(): ClusterModuleInterface;
 

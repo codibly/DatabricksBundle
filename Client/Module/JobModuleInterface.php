@@ -2,17 +2,29 @@
 
 namespace Codibly\DatabricksBundle\Client\Module;
 
+use Codibly\DatabricksBundle\DTO\Job;
+use Codibly\DatabricksBundle\DTO\Job\JobSettings;
+
 interface JobModuleInterface
 {
-    public function create(array $params = []);
+    const ENDPOINT_CREATE = 'jobs/create';
+    const ENDPOINT_LIST = 'jobs/list';
+    const ENDPOINT_DELETE = 'jobs/delete';
+    const ENDPOINT_GET = 'jobs/get';
+    const ENDPOINT_RESET = 'jobs/reset';
+    const ENDPOINT_RUN_NOW = 'jobs/run-now';
 
-    public function list(array $params = []);
+    public function create(JobSettings $jobSettings): Job;
 
-    public function delete(array $params = []);
+    public function list(): array;
 
-    public function get(array $params = []);
+    public function delete(int $jobId): void;
 
-    public function reset(array $params = []);
+    public function get(int $jobId): Job;
 
-    public function run(array $params = []);
+    public function reset(int $jobId, JobSettings $jobSettings): Job;
+
+    public function run(int $jobId, array $jarParams = [], array $notebookParams = []);
+
+    public function runAndSubmit(JobSettings $jobSettings);
 }

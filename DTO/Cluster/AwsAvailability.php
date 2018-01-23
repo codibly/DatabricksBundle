@@ -5,7 +5,7 @@ namespace Codibly\DatabricksBundle\DTO;
 class AwsAvailability extends GenericDTO implements ScalarDTOInterface
 {
     const ON_DEMAND = 'ON_DEMAND';
-    const SPOT_WITH_FALLBACK = 'SPOT';
+    const SPOT_WITH_FALLBACK = 'SPOT_WITH_FALLBACK';
 
     protected $spot;
 

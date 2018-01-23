@@ -71,12 +71,23 @@ class ClusterModule extends GenericModule implements ClusterModuleInterface
         );
     }
 
-    public function list()
+    /**
+     * @return array|Cluster[]
+     */
+    public function list(): array
     {
-        return $this->client->getAdapter()->makeRequest(
+        $response = $this->client->getAdapter()->makeRequest(
             Request::METHOD_GET,
             ClusterModuleInterface::ENDPOINT_LIST
         );
+
+        $collection = [];
+
+        foreach ($response['clusters'] as $rawCluster) {
+            $collection[] = Cluster::hydrate($rawCluster);
+        }
+
+        return $collection;
     }
 
     public function listZones()
