@@ -44,6 +44,11 @@ class Client implements ClientInterface
         $this->adapter = $adapter;
     }
 
+    public function getLogger(): LoggerInterface
+    {
+       return $this->logger;
+    }
+
     /**
      * @inheritDoc
      */
